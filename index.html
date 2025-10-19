@@ -1,22 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <title>Intro SE331</title>
-    <!-- Import Styles -->
-    <link rel="stylesheet" href="./assets/styles.css" />
-    <!-- Import Vue.js -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Product App</title>
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
-
 <body>
     <div id="app">
-        <h1>Product goes here</h1>
+        <div class="nav-bar"></div>
+        
+        <div class="cart">
+            <div class="cart-header">Shopping Cart ({{ totalItems }} items)</div>
+            <div class="cart-items" v-if="Object.keys(cartItems).length > 0">
+                <div v-for="(quantity, id) in cartItems" :key="id" class="cart-item">
+                    <span class="item-info">
+                        Product {{ id }}: {{ quantity }} {{ quantity > 1 ? 'items' : 'item' }}
+                    </span>
+                    <button 
+                        class="remove-button" 
+                        @click="removeFromCart(id)"
+                        title="Remove one item"
+                    >
+                        −
+                    </button>
+                </div>
+            </div>
+            <div v-else class="empty-cart">
+                Your cart is empty
+            </div>
+        </div>
+        
+        <product-display 
+            :premium="premium" 
+            @add-to-cart="updateCart"
+            @remove-from-cart="removeFromCart"
+        ></product-display>
     </div>
 
-    <!-- Import Js -->
-    <script src="./main.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    
+    <script src="components/ProductDetails.js"></script>
+    <script src="components/ReviewForm.js"></script>
+    <script src="components/ReviewList.js"></script>
+    <script src="components/ProductDisplay.js"></script>
+    
+   
+    <script src="main.js"></script>
 </body>
-
 </html>
